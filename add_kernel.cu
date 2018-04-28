@@ -1,3 +1,4 @@
+#include <iostream>
 #include "gpu_add.hpp"
 
 #define MOBULA_KERNEL __global__ void 
@@ -7,6 +8,16 @@
 #define KERNEL_LOOP(i,n) for (int i = blockIdx.x * blockDim.x + threadIdx.x;i < (n);i += blockDim.x * gridDim.x)
 
 #define KERNEL_RUN(a, n) (a)<<<CUDA_GET_BLOCKS(n), CUDA_NUM_THREADS>>>
+
+
+#define CUDA_CHECK(condition) \
+  /* Code block avoids redefinition of cudaError_t error */ \
+  do { \
+    cudaError_t error = condition; \
+    if (error != cudaSuccess) { \
+      std::cout << cudaGetErrorString(error) << std::endl; \
+    } \
+  } while (0)
 
 
 MOBULA_KERNEL add_kernel(const int n, const float *a, const float *b, float *output){

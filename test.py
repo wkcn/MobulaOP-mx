@@ -1,11 +1,14 @@
 import mxnet as mx
-from gpu_add import gpu_add
+import numpy as np
+from gpu_add import add
 
 ctx = mx.gpu(0)
-shape = (1,2,3,4)
+dtype = np.float32
 
-a = mx.nd.random(shape, ctx = ctx)
-b = mx.nd.random(shape, ctx = ctx)
-c = gpu_add(a, b)
+a = mx.nd.array(np.arange(5), dtype = dtype, ctx = ctx)
+b = mx.nd.array(np.arange(5, 10), dtype = dtype, ctx = ctx)
+
+c = add(a, b)
 rc = a + b
+print (c.asnumpy(), rc.asnumpy())
 assert (c.asnumpy() == rc.asnumpy()).all()

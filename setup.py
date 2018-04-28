@@ -118,14 +118,6 @@ class custom_build_ext(build_ext):
 
 
 ext_modules = [
-    '''
-    Extension(
-        "cpu_nms",
-        ["cpu_nms.pyx"],
-        extra_compile_args={'gcc': ["-Wno-cpp", "-Wno-unused-function"]},
-        include_dirs = [numpy_include]
-    ),
-    '''
 ]
 
 if CUDA is not None:
