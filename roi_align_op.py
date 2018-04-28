@@ -30,17 +30,17 @@ class ROIAlignOP(mx.operator.CustomOp):
         top_diff = out_grad[0]
         if req[0] == 'add':
             data_diff_temp = self.get_ndarray_temp(data_diff) 
-            roi_align_op.backward(data, rois, top_diff, self.pooled_size, self.spatial_scale, data_diff_temp)
+            roi_align_op.backward(data, rois, top_diff, self.pooled_size, self.spatial_scale, self.sampling_ratio, data_diff_temp)
             data_diff[:] += data_diff_temp
         else:
-            roi_align_op.backward(data, rois, top_diff, self.pooled_size, self.spatial_scale, data_diff)
+            roi_align_op.backward(data, rois, top_diff, self.pooled_size, self.spatial_scale, self.sampling_ratio, data_diff)
         self.assign(in_grad[1], req[1], 0)
     def get_ndarray_temp(self, out):
         return mx.nd.empty(shape = out.shape, dtype = out.dtype, ctx = out.context)
 
 @mx.operator.register('ROIAlign')
 class ROIAlignProp(mx.operator.CustomOpProp):
-    def __init__(self, pooled_size, spatial_scale, sampling_ratio):
+    def __init__(self, pooled_size, spatial_scale, sampling_ratio = '0.0'):
         super(ROIAlignProp, self).__init__(need_top_grad = True)
         str2tuple = lambda s, dtype : np.fromstring(s[1:-1], dtype = dtype, sep = ',')
         self.pooled_size = str2tuple(pooled_size, int)
