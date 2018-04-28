@@ -1,3 +1,5 @@
+#include <iostream>
+
 #define MOBULA_KERNEL __global__ void 
 #define CUDA_NUM_THREADS 512
 #define CUDA_GET_BLOCKS(n) ((n) + CUDA_NUM_THREADS - 1) / CUDA_NUM_THREADS

@@ -1,4 +1,3 @@
-#include <iostream>
 #include "gpu_add.hpp"
 #include "cu_def.cuh"
 

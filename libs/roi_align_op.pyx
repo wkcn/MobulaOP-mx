@@ -1,4 +1,4 @@
-from defines import Pointer 
+include "pyx_def.pyx"
 import mxnet as mx
 
 cdef extern from "roi_align_op.hpp":

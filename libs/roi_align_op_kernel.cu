@@ -1,5 +1,6 @@
 // Adapted from [Caffe2](http://github.com/caffe2/caffe2)
 #include "roi_align_op.hpp"
+#include "cu_def.cuh"
 
 template <typename T>
 __device__ T bilinear_interpolate(
@@ -128,45 +129,6 @@ __global__ void RoIAlignForward(
 
     top_data[index] = output_val;
   }
-}
-
-} // namespace
-
-template <>
-bool RoIAlignOp<float, CUDAContext>::RunOnDevice() {
-  auto& X = Input(0); // Input data to pool
-  auto& R = Input(1); // RoIs
-  auto* Y = Output(0); // RoI pooled data
-
-  if (R.size() == 0) {
-    // Handle empty rois
-    Y->Resize(0, X.dim32(1), pooled_height_, pooled_width_);
-    // The following mutable_data calls are needed to allocate the tensors
-    Y->mutable_data<float>();
-    return true;
-  }
-
-  assert(sampling_ratio_ >= 0);
-
-  Y->Resize(R.dim32(0), X.dim32(1), pooled_height_, pooled_width_);
-  int output_size = Y->size();
-  RoIAlignForward<float>
-      <<<CAFFE_GET_BLOCKS(output_size),
-         CAFFE_CUDA_NUM_THREADS,
-         0,
-         context_.cuda_stream()>>>(
-          output_size,
-          X.data<float>(),
-          spatial_scale_,
-          X.dim32(1),
-          X.dim32(2),
-          X.dim32(3),
-          pooled_height_,
-          pooled_width_,
-          sampling_ratio_,
-          R.data<float>(),
-          Y->mutable_data<float>());
-  return true;
 }
 
 template <typename T>

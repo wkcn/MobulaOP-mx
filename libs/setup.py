@@ -120,26 +120,29 @@ class custom_build_ext(build_ext):
 ext_modules = [
 ]
 
+cuda_op_modules = ['gpu_add', 'roi_align_op']
+
 if CUDA is not None:
-    ext_modules.append(
-        Extension('gpu_add',
-            ['gpu_add_kernel.cu', 'gpu_add.pyx'],
-            library_dirs=[CUDA['lib64']],
-            libraries=['cudart'],
-            language='c++',
-            runtime_library_dirs=[CUDA['lib64']],
-            # this syntax is specific to this build system
-            # we're only going to use certain compiler args with nvcc and not with
-            # gcc the implementation of this trick is in customize_compiler() below
-            extra_compile_args={'gcc': ["-Wno-unused-function"],
-                                'nvcc': ['-arch=sm_35',
-                                         '--ptxas-options=-v',
-                                         '-c',
-                                         '--compiler-options',
-                                         "'-fPIC'"]},
-            include_dirs = [numpy_include, CUDA['include']]
+    for name in cuda_op_modules:
+        ext_modules.append(
+            Extension('%s' % name,
+                ['%s_kernel.cu' % name, '%s.pyx' % name],
+                library_dirs=[CUDA['lib64']],
+                libraries=['cudart'],
+                language='c++',
+                runtime_library_dirs=[CUDA['lib64']],
+                # this syntax is specific to this build system
+                # we're only going to use certain compiler args with nvcc and not with
+                # gcc the implementation of this trick is in customize_compiler() below
+                extra_compile_args={'gcc': ["-Wno-unused-function"],
+                                    'nvcc': ['-arch=sm_35',
+                                             '--ptxas-options=-v',
+                                             '-c',
+                                             '--compiler-options',
+                                             "'-fPIC'"]},
+                include_dirs = [numpy_include, CUDA['include']]
+            )
         )
-    )
 else:
     print('Skipping GPU Code Building')
 
