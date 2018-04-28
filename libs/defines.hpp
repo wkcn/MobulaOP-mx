@@ -25,3 +25,12 @@ template <>
 inline __device__ float gpu_atomic_add(const float val, float* address) {
   return atomicAdd(address, val);
 }
+
+void set_device(int device_id) {
+    int current_device;
+    CUDA_CHECK(cudaGetDevice(&current_device));
+    if (current_device != device_id) {
+        CUDA_CHECK(cudaSetDevice(device_id));
+    }
+}
+
