@@ -7,8 +7,8 @@ cdef extern from "roi_align_op.hpp":
 
 def forward(data, rois, pooled_size, spatial_scale, sampling_ratio, out):
     device_id = data.context.device_id 
-    roi_align_op_forward(out.size(), Pointer(data), spatial_scale, data.shape[1], data.shape[2], data.shape[3], pooled_size[0], pooled_size[1], sampling_ratio, Pointer(rois), Pointer(out), device_id)
+    roi_align_op_forward(out.size, Pointer(data), spatial_scale, data.shape[1], data.shape[2], data.shape[3], pooled_size[0], pooled_size[1], sampling_ratio, Pointer(rois), Pointer(out), device_id)
 
 def backward(data, rois, top_diff, pooled_size, spatial_scale, sampling_ratio, data_diff):
     device_id = data.context.device_id 
-    roi_align_op_backward(top_diff.size(), Pointer(top_diff), rois.shape[0], spatial_scale, data.shape[1], data.shape[2], data.shape[3], pooled_size[0], pooled_size[1], sampling_ratio, Pointer(data_diff), Pointer(rois), device_id)
+    roi_align_op_backward(top_diff.size, Pointer(top_diff), rois.shape[0], spatial_scale, data.shape[1], data.shape[2], data.shape[3], pooled_size[0], pooled_size[1], sampling_ratio, Pointer(data_diff), Pointer(rois), device_id)

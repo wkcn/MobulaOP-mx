@@ -1,4 +1,5 @@
 from libs import roi_align_op
+import mxnet as mx
 import numpy as np
 
 class ROIAlignOP(mx.operator.CustomOp):
@@ -25,8 +26,8 @@ class ROIAlignOP(mx.operator.CustomOp):
 class ROIAlignProp(mx.operator.CustomOpProp):
     def __init__(self, pooled_size, spatial_scale, sampling_ratio):
         super(ROIAlignProp, self).__init__(need_top_grad = True)
-        str2tuple = lambda s : np.fromstring(s[1:-1], dtype = float, sep = ',')
-        self.pooled_size = str2tuple(pooled_size)
+        str2tuple = lambda s, dtype : np.fromstring(s[1:-1], dtype = dtype, sep = ',')
+        self.pooled_size = str2tuple(pooled_size, int)
         self.spatial_scale = float(spatial_scale)
         self.sampling_ratio = float(sampling_ratio)
 
