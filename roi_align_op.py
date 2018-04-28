@@ -29,10 +29,9 @@ class ROIAlignOP(mx.operator.CustomOp):
         data_diff = in_grad[0]
         top_diff = out_grad[0]
         if req[0] == 'add':
-            data_diff_temp = self.get_ndarray_temp(data_diff) 
-            roi_align_op.backward(data, rois, top_diff, self.pooled_size, self.spatial_scale, self.sampling_ratio, data_diff_temp)
-            data_diff[:] += data_diff_temp
+            roi_align_op.backward(data, rois, top_diff, self.pooled_size, self.spatial_scale, self.sampling_ratio, data_diff)
         else:
+            data_diff[:] = 0
             roi_align_op.backward(data, rois, top_diff, self.pooled_size, self.spatial_scale, self.sampling_ratio, data_diff)
         self.assign(in_grad[1], req[1], 0)
     def get_ndarray_temp(self, out):

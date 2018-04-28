@@ -36,3 +36,9 @@ inline void set_device(int device_id) {
     }
 }
 
+
+template <typename T>
+__global__ void set_kernel(const int n, const T value, T* y);
+
+template <typename T>
+void gpu_set_value(const int n, const T value, T* y);

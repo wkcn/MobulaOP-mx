@@ -126,7 +126,7 @@ if CUDA is not None:
     for name in cuda_op_modules:
         ext_modules.append(
             Extension('%s' % name,
-                ['%s_kernel.cu' % name, '%s.pyx' % name],
+                ['%s_kernel.cu' % name, '%s.pyx' % name, "cu_def.cu"],
                 library_dirs=[CUDA['lib64']],
                 libraries=['cudart'],
                 language='c++',
