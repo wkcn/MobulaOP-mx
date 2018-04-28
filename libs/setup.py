@@ -123,7 +123,7 @@ ext_modules = [
 if CUDA is not None:
     ext_modules.append(
         Extension('gpu_add',
-            ['add_kernel.cu', 'gpu_add.pyx'],
+            ['gpu_add_kernel.cu', 'gpu_add.pyx'],
             library_dirs=[CUDA['lib64']],
             libraries=['cudart'],
             language='c++',

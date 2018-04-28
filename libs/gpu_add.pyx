@@ -1,5 +1,5 @@
+include "pyx_def.pyx"
 import mxnet as mx
-from defines import Pointer 
 
 cdef extern from "gpu_add.hpp":
     void gpu_add(const float *a, const float *b, int n, float *c, int device_id);
