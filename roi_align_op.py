@@ -58,7 +58,7 @@ class ROIAlignProp(mx.operator.CustomOpProp):
         assert len(dshape) == 4
         assert len(rshape) == 2
         assert rshape[1] == 5
-        oshape = [dshape[0], dshape[1], self.pooled_size[0], self.pooled_size[1]]
+        oshape = [rshape[0], dshape[1], self.pooled_size[0], self.pooled_size[1]]
         return [dshape, rshape], [oshape] 
 
     def create_operator(self, ctx, shapes, dtypes):
