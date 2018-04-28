@@ -1,4 +1,4 @@
-from .libs import roi_align_op
+from libs import roi_align_op
 import numpy as np
 
 class ROIAlignOP(mx.operator.CustomOp):
