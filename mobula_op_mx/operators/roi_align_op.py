@@ -1,4 +1,4 @@
-from libs import roi_align_op
+from ..libs import roi_align_op
 import mxnet as mx
 import numpy as np
 

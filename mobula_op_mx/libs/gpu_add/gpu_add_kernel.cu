@@ -1,5 +1,5 @@
 #include "gpu_add.hpp"
-#include "cu_def.cuh"
+#include "../cu_def.cuh"
 
 MOBULA_KERNEL add_kernel(const int n, const float *a, const float *b, float *output){
 	KERNEL_LOOP(i, n){

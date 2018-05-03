@@ -1,6 +1,6 @@
 // Adapted from [Caffe2](http://github.com/caffe2/caffe2)
 #include "roi_align_op.hpp"
-#include "cu_def.cuh"
+#include "../cu_def.cuh"
 
 template <typename T>
 __device__ T bilinear_interpolate(

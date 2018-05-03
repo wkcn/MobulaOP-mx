@@ -1,6 +1,6 @@
 import mxnet as mx
 import numpy as np
-from libs.gpu_add import add
+from mobula_op_mx.libs.gpu_add import add
 
 ctx = mx.gpu(0)
 dtype = np.float32

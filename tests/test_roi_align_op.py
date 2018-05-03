@@ -1,6 +1,6 @@
 import mxnet as mx
 import numpy as np
-import roi_align_op
+import mobula_op_mx.operators.roi_align_op
 
 ctx = mx.gpu(0)
 dtype = np.float32
