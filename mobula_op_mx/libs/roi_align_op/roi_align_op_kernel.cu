@@ -18,6 +18,7 @@ __global__ void ROIAlignForwardKernel(const int count, const Dtype* bottom_data,
   for (int index = (blockIdx.x + blockIdx.y * gridDim.x) * blockDim.x + threadIdx.x;
        index < count;
        index += blockDim.x * gridDim.x * gridDim.y) {
+    top_data[index] = - FLT_MAX;
     // (n, c, ph, pw) is an element in the pooled output
     int pw = index % pooled_width;
     int ph = (index / pooled_width) % pooled_height;

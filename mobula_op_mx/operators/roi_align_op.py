@@ -13,6 +13,8 @@ class ROIAlignOP(mx.operator.CustomOp):
         data = in_data[0]
         rois = in_data[1]
         out, argmax_x, argmax_y = out_data
+        argmax_x[:] = -1
+        argmax_y[:] = -1
         if req[0] == 'add':
             out_temp = self.get_ndarray_temp(out)
             roi_align_op.forward(data, rois, self.pooled_size, self.spatial_scale, out_temp, argmax_x, argmax_y)
