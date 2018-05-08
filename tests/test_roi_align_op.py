@@ -13,8 +13,8 @@ rois = np.array([[0, 1, 1, 3, 3]], dtype = dtype)
 data_sym = mx.sym.Variable('data')
 rois_sym = mx.sym.Variable('rois')
 
-output_sym = mx.sym.Custom(op_type = 'ROIAlign', data = data_sym, rois = rois_sym, pooled_size = (2,2), spatial_scale = 1.0, sampling_ratio = 1.0)
-output_sym = mx.sym.MakeLoss(output_sym)
+output_sym = mx.sym.Custom(op_type = 'ROIAlign', data = data_sym, rois = rois_sym, pooled_size = (2,2), spatial_scale = 1.0)
+output_sym = mx.sym.MakeLoss(output_sym[0])
 
 print (data.shape, rois.shape)
 exe = output_sym.simple_bind(ctx, data = data.shape, rois = rois.shape) 

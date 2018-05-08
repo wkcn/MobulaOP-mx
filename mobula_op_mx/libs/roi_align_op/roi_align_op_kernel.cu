@@ -6,6 +6,7 @@
 */
 #include "roi_align_op.hpp"
 #include "../cu_def.cuh"
+#include <cfloat>
 
 template<typename Dtype>
 __global__ void ROIAlignForwardKernel(const int count, const Dtype* bottom_data,
